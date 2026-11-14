@@ -16,6 +16,7 @@ This project is configured for the free-tier Option 1 deployment flow:
 4. Add environment variables:
    - `SERVER_PORT=8081`
    - `SPRING_DATASOURCE_URL=jdbc:postgresql://<host>:5432/<db>`
+   - or `DATABASE_URL=jdbc:postgresql://<host>:5432/<db>` if your host/provider uses the common cloud naming convention
    - `SPRING_DATASOURCE_USERNAME=<db-user>`
    - `SPRING_DATASOURCE_PASSWORD=<db-password>`
    - `SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver`
@@ -26,7 +27,21 @@ This project is configured for the free-tier Option 1 deployment flow:
 
 ## 2) Database setup
 
-Use Supabase Postgres or Render Postgres. Once created, copy the connection string into the backend env variables.
+Use Supabase Postgres or Render Postgres. For Supabase, use the direct database host from the project settings and append `?sslmode=require`.
+
+Important:
+- The host must be the direct Postgres host, not a localhost value.
+- Use the port shown in Supabase Database > Connection info (usually 5432 for direct connections).
+- Add Render's outbound IP to Supabase's allowed IP list or enable public access for the database if you are using a small free setup.
+- If the app logs show `java.net.SocketException: Network is unreachable`, the issue is environmental connectivity to the database host, not a Java compile error.
+
+Example:
+
+```env
+SPRING_DATASOURCE_URL=jdbc:postgresql://db.<project-ref>.supabase.co:5432/postgres?sslmode=require
+SPRING_DATASOURCE_USERNAME=postgres
+SPRING_DATASOURCE_PASSWORD=<supabase-password>
+```
 
 ## 3) Frontend on Vercel
 

@@ -27,21 +27,21 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen bg-slate-100 text-slate-800">
       <div className="mx-auto flex max-w-7xl gap-6 px-4 py-6">
-        <aside className="hidden w-72 rounded-3xl border border-slate-200 bg-slate-950 p-5 text-slate-100 shadow-soft lg:block">
+        <aside className="hidden w-72 rounded-[28px] border border-slate-200 bg-slate-950 p-5 text-slate-100 shadow-[0_20px_45px_rgba(15,23,42,0.18)] lg:block">
           <div className="mb-8 flex items-center gap-3">
-            <div className="rounded-2xl bg-emerald-500/20 p-2 text-emerald-400">
+            <div className="rounded-2xl bg-emerald-500/20 p-2 text-emerald-400 ring-1 ring-emerald-500/20">
               <Package2 className="h-6 w-6" />
             </div>
             <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-slate-400">PharmaFlow</p>
+              <p className="text-[10px] uppercase tracking-[0.35em] text-slate-400">PharmaFlow</p>
               <h1 className="text-xl font-semibold">Pharmacy</h1>
             </div>
           </div>
 
-          <div className="mb-6 rounded-2xl border border-slate-800 bg-slate-900/50 p-3 text-sm">
+          <div className="mb-6 rounded-2xl border border-slate-800 bg-slate-900/60 p-3 text-sm shadow-inner shadow-slate-950/20">
             <p className="text-slate-400">Signed in as</p>
             <p className="mt-1 font-medium text-white">{user.name}</p>
-            <p className="text-xs uppercase tracking-[0.2em] text-emerald-400">{user.role}</p>
+            <p className="text-[10px] uppercase tracking-[0.25em] text-emerald-400">{user.role}</p>
           </div>
 
           <nav className="space-y-2">
@@ -51,7 +51,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                 to={to}
                 className={({ isActive }) =>
                   `flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium transition ${
-                    isActive ? 'bg-emerald-500 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+                    isActive ? 'bg-emerald-500 text-white shadow-[0_12px_24px_rgba(16,185,129,0.32)]' : 'text-slate-300 hover:bg-slate-800 hover:text-white'
                   }`
                 }
               >
@@ -61,12 +61,12 @@ export default function Layout({ children }: { children: ReactNode }) {
             ))}
           </nav>
 
-          <div className="mt-8 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-sm text-emerald-200">
+          <div className="mt-8 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-sm text-emerald-100">
             <div className="mb-2 flex items-center gap-2 font-semibold">
               <Activity className="h-4 w-4" />
               Secure operations
             </div>
-            <p>Role-based access and live stock monitoring for UK pharmacy workflows.</p>
+            <p className="text-emerald-50/90">Role-based access and live stock monitoring for UK pharmacy workflows.</p>
           </div>
 
           <button
