@@ -1,0 +1,16 @@
+name: pharmacy-management
+metadata:
+  template: pharmacy-management@0.0.1
+services:
+  backend:
+    project: ./apps/backend
+    host: containerapp
+    language: java
+    docker:
+      path: ./Dockerfile
+  frontend:
+    project: ./apps/frontend
+    host: containerapp
+    language: js
+    docker:
+      path: ./Dockerfile
