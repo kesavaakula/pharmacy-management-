@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
+import ErrorBoundary from './components/ErrorBoundary';
 import Layout from './components/Layout';
 import { SummaryProvider } from './components/SummaryContext';
 import { ToastProvider } from './components/Toast';
@@ -24,14 +25,16 @@ export default function App() {
     <ToastProvider>
       <SummaryProvider>
         <Layout>
-          <Routes>
+          <ErrorBoundary>
+            <Routes>
             <Route path="/" element={<DashboardPage />} />
             <Route path="/inventory" element={<InventoryPage />} />
             <Route path="/purchases" element={<PurchasesPage />} />
             <Route path="/billing" element={<BillingPage />} />
             <Route path="/security" element={<SecurityPage />} />
             <Route path="*" element={<DashboardPage />} />
-          </Routes>
+            </Routes>
+          </ErrorBoundary>
         </Layout>
       </SummaryProvider>
     </ToastProvider>
