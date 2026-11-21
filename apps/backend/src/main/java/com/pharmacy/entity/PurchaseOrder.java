@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "purchase_orders")
@@ -22,7 +23,11 @@ public class PurchaseOrder {
     private BigDecimal totalAmount = BigDecimal.ZERO;
 
     @Column(nullable = false)
-    private String status = "PENDING";
+    private String status = "ORDERED";
+
+    private LocalDate receivedDate;
+
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     public PurchaseOrder() {
     }
@@ -65,5 +70,21 @@ public class PurchaseOrder {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public LocalDate getReceivedDate() {
+        return receivedDate;
+    }
+
+    public void setReceivedDate(LocalDate receivedDate) {
+        this.receivedDate = receivedDate;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }

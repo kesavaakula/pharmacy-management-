@@ -6,25 +6,25 @@ cors:
 
 spring:
   datasource:
-    url: ${SPRING_DATASOURCE_URL:${DATABASE_URL:${JDBC_DATABASE_URL:jdbc:h2:file:./data/pharmacy_db;MODE=PostgreSQL;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1}}}
-    username: ${SPRING_DATASOURCE_USERNAME:${DATABASE_USERNAME:sa}}
-    password: ${SPRING_DATASOURCE_PASSWORD:${DATABASE_PASSWORD:}}
-    driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME:${DATABASE_DRIVER_CLASS_NAME:org.h2.Driver}}
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+    url: ${SPRING_DATASOURCE_URL:${DATABASE_URL:jdbc:postgresql://localhost:5432/pharmacy}}
+    username: ${SPRING_DATASOURCE_USERNAME:${DATABASE_USERNAME:postgres}}
+    password: ${SPRING_DATASOURCE_PASSWORD:${DATABASE_PASSWORD:postgres}}
+    driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME:${DATABASE_DRIVER_CLASS_NAME:org.postgresql.Driver}}
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: ${JPA_SHOW_SQL:false}
+    open-in-view: false
     properties:
       hibernate:
-        format_sql: true
-        dialect: ${HIBERNATE_DIALECT:${DATABASE_DIALECT:org.hibernate.dialect.H2Dialect}}
+        format_sql: false
+        dialect: ${HIBERNATE_DIALECT:${DATABASE_DIALECT:org.hibernate.dialect.PostgreSQLDialect}}
   sql:
     init:
       mode: always
+
+app:
+  demo-data: ${APP_DEMO_DATA:true}
 
 jwt:
   secret: ${JWT_SECRET:PharmacySecretKeyForSecureInventorySystem2026}

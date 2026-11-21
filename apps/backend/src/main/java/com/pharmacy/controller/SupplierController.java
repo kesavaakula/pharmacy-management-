@@ -1,6 +1,7 @@
 package com.pharmacy.controller;
 
 import com.pharmacy.entity.Supplier;
+import com.pharmacy.repository.PurchaseOrderRepository;
 import com.pharmacy.repository.SupplierRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +14,11 @@ public class SupplierController {
 
     private final SupplierRepository supplierRepository;
 
-    public SupplierController(SupplierRepository supplierRepository) {
+    private final PurchaseOrderRepository purchaseOrderRepository;
+
+    public SupplierController(SupplierRepository supplierRepository, PurchaseOrderRepository purchaseOrderRepository) {
         this.supplierRepository = supplierRepository;
+        this.purchaseOrderRepository = purchaseOrderRepository;
     }
 
     @GetMapping("/suppliers")
@@ -51,6 +55,9 @@ public class SupplierController {
     @DeleteMapping("/suppliers/{id}")
     public ResponseEntity<Void> deleteSupplier(@PathVariable Long id) {
         if (supplierRepository.existsById(id)) {
+            if (purchaseOrderRepository.existsBySupplierId(id)) {
+                throw new IllegalArgumentException("This supplier has purchase orders and cannot be deleted");
+            }
             supplierRepository.deleteById(id);
             return ResponseEntity.noContent().build();
         }

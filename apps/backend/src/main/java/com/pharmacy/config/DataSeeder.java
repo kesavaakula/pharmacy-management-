@@ -3,6 +3,7 @@ package com.pharmacy.config;
 import com.pharmacy.entity.*;
 import com.pharmacy.repository.*;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Component
+@Order(1)
 public class DataSeeder implements CommandLineRunner {
 
     private final UserRepository userRepository;

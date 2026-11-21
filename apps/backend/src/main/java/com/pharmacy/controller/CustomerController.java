@@ -2,6 +2,7 @@ package com.pharmacy.controller;
 
 import com.pharmacy.entity.Customer;
 import com.pharmacy.repository.CustomerRepository;
+import com.pharmacy.repository.SalesInvoiceRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,8 +14,11 @@ public class CustomerController {
 
     private final CustomerRepository customerRepository;
 
-    public CustomerController(CustomerRepository customerRepository) {
+    private final SalesInvoiceRepository salesInvoiceRepository;
+
+    public CustomerController(CustomerRepository customerRepository, SalesInvoiceRepository salesInvoiceRepository) {
         this.customerRepository = customerRepository;
+        this.salesInvoiceRepository = salesInvoiceRepository;
     }
 
     @GetMapping("/customers")
@@ -43,6 +47,9 @@ public class CustomerController {
                     existing.setEmail(updatedCustomer.getEmail());
                     existing.setAddress(updatedCustomer.getAddress());
                     existing.setDateOfBirth(updatedCustomer.getDateOfBirth());
+                    if (updatedCustomer.getCreditLimit() != null) {
+                        existing.setCreditLimit(updatedCustomer.getCreditLimit());
+                    }
                     return ResponseEntity.ok(customerRepository.save(existing));
                 })
                 .orElse(ResponseEntity.notFound().build());
@@ -51,6 +58,9 @@ public class CustomerController {
     @DeleteMapping("/customers/{id}")
     public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
         if (customerRepository.existsById(id)) {
+            if (salesInvoiceRepository.existsByCustomerId(id)) {
+                throw new IllegalArgumentException("This customer has invoices and cannot be deleted");
+            }
             customerRepository.deleteById(id);
             return ResponseEntity.noContent().build();
         }

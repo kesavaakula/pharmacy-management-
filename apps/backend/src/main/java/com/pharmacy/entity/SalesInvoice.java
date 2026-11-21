@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "sales_invoices")
@@ -23,6 +24,10 @@ public class SalesInvoice {
 
     @Column(nullable = false)
     private String status = "PAID";
+
+    private String paymentMethod;
+
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     public SalesInvoice() {
     }
@@ -65,5 +70,21 @@ public class SalesInvoice {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }
